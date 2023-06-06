@@ -4,19 +4,21 @@
 
 #include "../headers/Game.h"
 #include "../headers/Window.h"
+#include "../headers/Object.h"
 
 Game::Game(Window *window) {
     _window = window;
-}
-
-Game::~Game() {
-
 }
 
 void Game::Run() {
     while (_window->IsOpen()) {
         _window->PollEvents();
         _window->Clear();
+
+        for (auto object : _objects) {
+            object->Draw(_window);
+        }
+
         _window->Display();
     }
 }

@@ -5,17 +5,19 @@
 #ifndef SPACEINVADERS_GAME_H
 #define SPACEINVADERS_GAME_H
 
+#include <vector>
+
 class Window;
+class Object;
 
 class Game {
 public:
     Game(Window *window);
-    ~Game();
 
     void Run();
 private:
     Window *_window;
+    std::vector<Object*> _objects;
 };
-
 
 #endif //SPACEINVADERS_GAME_H
