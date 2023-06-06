@@ -13,7 +13,7 @@ public:
 
     void Update(Window *window, float timeDelta) override;
 private:
-    float _speed = 5;
+    float _speed = 500;
 };
 
 

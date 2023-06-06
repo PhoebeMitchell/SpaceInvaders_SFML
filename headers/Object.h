@@ -16,7 +16,7 @@ public:
     Object(Game *game);
 
     virtual void Update(Window *window, float timeDelta);
-    void SetPosition(int x, int y, bool relative);
+    void SetPosition(float x, float y, bool relative);
     void SetSprite(std::unique_ptr<Sprite> *sprite);
 private:
     std::unique_ptr<Sprite> _sprite;

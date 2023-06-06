@@ -20,7 +20,7 @@ void Sprite::SetFrame(int frameNumber) {
     _sprite.setTextureRect(sf::IntRect(rectWidth * frameNumber, 0, rectWidth, textureSize.y));
 }
 
-void Sprite::SetPosition(int x, int y) {
+void Sprite::SetPosition(float x, float y) {
     _sprite.setPosition(x, y);
 }
 

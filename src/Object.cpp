@@ -2,6 +2,7 @@
 // Created by Phoebe Mitchell on 06/06/2023.
 //
 
+#include <iostream>
 #include "../headers/Object.h"
 #include "../headers/Window.h"
 
@@ -13,12 +14,14 @@ void Object::Update(Window *window, float timeDelta) {
     window->Draw(_sprite->GetDrawable());
 }
 
-void Object::SetPosition(int x, int y, bool relative) {
+void Object::SetPosition(float x, float y, bool relative) {
+    std::cout << x << " " << y << std::endl;
     if (relative) {
         auto position = _sprite->GetPosition();
         x += position.x;
         y += position.y;
     }
+    std::cout << x << " " << y << std::endl << std::endl;
     _sprite->SetPosition(x, y);
 }
 

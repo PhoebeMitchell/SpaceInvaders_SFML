@@ -14,7 +14,7 @@ public:
     Sprite(std::string spritePath, int columnCount, int scale);
 
     void SetFrame(int frameNumber);
-    void SetPosition(int x, int y);
+    void SetPosition(float x, float y);
     void SetOrigin(float x, float y);
     sf::Drawable *GetDrawable();
     sf::Vector2f GetPosition();

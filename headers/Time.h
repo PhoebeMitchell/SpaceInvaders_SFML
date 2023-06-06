@@ -6,8 +6,14 @@
 #define SPACEINVADERS_TIME_H
 
 
-class Time {
+#include <SFML/System/Clock.hpp>
 
+class Time {
+public:
+    float GetTimeDelta();
+private:
+    sf::Clock _clock;
+    float _previousTime;
 };
 
 
