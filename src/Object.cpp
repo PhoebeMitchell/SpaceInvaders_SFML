@@ -4,20 +4,24 @@
 
 #include "../headers/Object.h"
 #include "../headers/Window.h"
-#include "../headers/Sprite.h"
 
-Object::Object() {
-
+Object::Object(Game *game) {
+    game->AddObject(this);
 }
 
-void Object::Update(Window *window) {
+void Object::Update(Window *window, float timeDelta) {
     window->Draw(_sprite->GetDrawable());
 }
 
-void Object::SetPosition(int x, int y) {
+void Object::SetPosition(int x, int y, bool relative) {
+    if (relative) {
+        auto position = _sprite->GetPosition();
+        x += position.x;
+        y += position.y;
+    }
     _sprite->SetPosition(x, y);
 }
 
-void Object::SetSprite(Sprite *sprite) {
-    _sprite = sprite;
+void Object::SetSprite(std::unique_ptr<Sprite> *sprite) {
+    _sprite = std::move(*sprite);
 }

@@ -18,5 +18,5 @@ foreach(RESOURCE_FILE ${RESOURCE_FILES})
     configure_file(${RESOURCE_FILE} ${CMAKE_BINARY_DIR}/sprites/${FILE_NAME} COPYONLY)
 endforeach()
 
-add_executable(SpaceInvaders main.cpp src/Window.cpp headers/Window.h src/Game.cpp headers/Game.h src/Object.cpp headers/Object.h src/Sprite.cpp headers/Sprite.h headers/Updatable.h src/Input.cpp headers/Input.h headers/KeyFunction.h)
+add_executable(SpaceInvaders main.cpp src/Window.cpp headers/Window.h src/Game.cpp headers/Game.h src/Object.cpp headers/Object.h src/Sprite.cpp headers/Sprite.h src/Gun.cpp headers/Gun.h headers/Constants.h src/Time.cpp headers/Time.h)
 target_link_libraries(SpaceInvaders sfml-graphics sfml-audio)

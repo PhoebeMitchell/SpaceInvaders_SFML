@@ -6,19 +6,20 @@
 #define SPACEINVADERS_OBJECT_H
 
 #include <SFML/Graphics.hpp>
+#include "../headers/Sprite.h"
+#include "../headers/Game.h"
 
 class Window;
-class Sprite;
 
 class Object {
 public:
-    Object();
+    Object(Game *game);
 
     virtual void Update(Window *window, float timeDelta);
-    void SetPosition(int x, int y);
-    void SetSprite(Sprite *sprite);
+    void SetPosition(int x, int y, bool relative);
+    void SetSprite(std::unique_ptr<Sprite> *sprite);
 private:
-    Sprite *_sprite;
+    std::unique_ptr<Sprite> _sprite;
 };
 
 

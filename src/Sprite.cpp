@@ -32,3 +32,7 @@ void Sprite::SetOrigin(float x, float y) {
     auto textureRect = _texture.getSize();
     _sprite.setOrigin(x * textureRect.x, y * textureRect.y);
 }
+
+sf::Vector2f Sprite::GetPosition() {
+    return _sprite.getPosition();
+}

@@ -17,6 +17,7 @@ public:
     void SetPosition(int x, int y);
     void SetOrigin(float x, float y);
     sf::Drawable *GetDrawable();
+    sf::Vector2f GetPosition();
 private:
     sf::Texture _texture;
     sf::Sprite _sprite;
