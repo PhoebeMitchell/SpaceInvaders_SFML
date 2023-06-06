@@ -14,7 +14,7 @@ class Object {
 public:
     Object();
 
-    void Draw(Window *window);
+    virtual void Update(Window *window, float timeDelta);
     void SetPosition(int x, int y);
     void SetSprite(Sprite *sprite);
 private:

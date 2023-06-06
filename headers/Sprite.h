@@ -11,10 +11,11 @@
 
 class Sprite {
 public:
-    Sprite(std::string spritePath, int columnCount);
+    Sprite(std::string spritePath, int columnCount, int scale);
 
     void SetFrame(int frameNumber);
     void SetPosition(int x, int y);
+    void SetOrigin(float x, float y);
     sf::Drawable *GetDrawable();
 private:
     sf::Texture _texture;

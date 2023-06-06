@@ -5,6 +5,7 @@
 #include "../headers/Game.h"
 #include "../headers/Window.h"
 #include "../headers/Object.h"
+#include "../headers/Updatable.h"
 
 Game::Game(Window *window) {
     _window = window;
@@ -15,8 +16,12 @@ void Game::Run() {
         _window->PollEvents();
         _window->Clear();
 
+        for (auto updatable : _updatables) {
+            updatable->Update(0);
+        }
+
         for (auto object : _objects) {
-            object->Draw(_window);
+            object->Update(_window);
         }
 
         _window->Display();
@@ -25,4 +30,8 @@ void Game::Run() {
 
 void Game::AddObject(Object *object) {
     _objects.push_back(object);
+}
+
+void Game::AddUpdatable(Updatable *updatable) {
+    _updatables.push_back(updatable);
 }

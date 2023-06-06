@@ -4,13 +4,14 @@
 
 #include "../headers/Sprite.h"
 
-Sprite::Sprite(std::string spritePath, int columnCount) {
+Sprite::Sprite(std::string spritePath, int columnCount, int scale) {
     if (!_texture.loadFromFile(spritePath)) {
         throw std::invalid_argument("Could not open file " + spritePath);
     }
     _columnCount = columnCount;
     SetFrame(0);
     _sprite.setTexture(_texture);
+    _sprite.setScale(scale, scale);
 }
 
 void Sprite::SetFrame(int frameNumber) {
@@ -25,4 +26,9 @@ void Sprite::SetPosition(int x, int y) {
 
 sf::Drawable *Sprite::GetDrawable() {
     return &_sprite;
+}
+
+void Sprite::SetOrigin(float x, float y) {
+    auto textureRect = _texture.getSize();
+    _sprite.setOrigin(x * textureRect.x, y * textureRect.y);
 }

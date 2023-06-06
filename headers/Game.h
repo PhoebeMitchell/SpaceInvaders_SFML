@@ -9,6 +9,7 @@
 
 class Window;
 class Object;
+class Updatable;
 
 class Game {
 public:
@@ -16,9 +17,11 @@ public:
 
     void Run();
     void AddObject(Object *object);
+    void AddUpdatable(Updatable *updatable);
 private:
     Window *_window;
     std::vector<Object*> _objects;
+    std::vector<Updatable*> _updatables;
 };
 
 #endif //SPACEINVADERS_GAME_H

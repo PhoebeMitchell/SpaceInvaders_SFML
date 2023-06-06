@@ -10,7 +10,7 @@ Object::Object() {
 
 }
 
-void Object::Draw(Window *window) {
+void Object::Update(Window *window) {
     window->Draw(_sprite->GetDrawable());
 }
 
