@@ -4,19 +4,20 @@
 
 #include "../headers/Object.h"
 #include "../headers/Window.h"
+#include "../headers/Sprite.h"
 
-Object::Object(std::string spritePath) {
-    sf::Texture texture;
-    if (!texture.loadFromFile(spritePath)) {
-        throw std::invalid_argument("Could not open file " + spritePath);
-    }
-    _sprite.setTexture(texture);
+Object::Object() {
+
 }
 
 void Object::Draw(Window *window) {
-    window->Draw(&_sprite);
+    window->Draw(_sprite->GetDrawable());
 }
 
 void Object::SetPosition(int x, int y) {
-    _sprite.setPosition(x, y);
+    _sprite->SetPosition(x, y);
+}
+
+void Object::SetSprite(Sprite *sprite) {
+    _sprite = sprite;
 }

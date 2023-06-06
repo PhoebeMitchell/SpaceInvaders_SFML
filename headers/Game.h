@@ -15,6 +15,7 @@ public:
     Game(Window *window);
 
     void Run();
+    void AddObject(Object *object);
 private:
     Window *_window;
     std::vector<Object*> _objects;

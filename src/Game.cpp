@@ -22,3 +22,7 @@ void Game::Run() {
         _window->Display();
     }
 }
+
+void Game::AddObject(Object *object) {
+    _objects.push_back(object);
+}

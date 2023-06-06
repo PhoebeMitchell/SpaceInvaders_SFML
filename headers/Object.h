@@ -8,15 +8,17 @@
 #include <SFML/Graphics.hpp>
 
 class Window;
+class Sprite;
 
 class Object {
 public:
-    Object(std::string spritePath);
+    Object();
 
     void Draw(Window *window);
     void SetPosition(int x, int y);
+    void SetSprite(Sprite *sprite);
 private:
-    sf::Sprite _sprite;
+    Sprite *_sprite;
 };
 
 
