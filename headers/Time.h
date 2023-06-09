@@ -10,10 +10,13 @@
 
 class Time {
 public:
+    float Update();
     float GetTimeDelta();
+    float GetCurrentTime();
 private:
     sf::Clock _clock;
-    float _previousTime;
+    float _currentTime;
+    float _timeDelta;
 };
 
 

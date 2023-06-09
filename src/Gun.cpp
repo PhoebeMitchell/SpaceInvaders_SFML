@@ -2,23 +2,45 @@
 // Created by Phoebe Mitchell on 06/06/2023.
 //
 
-#include <iostream>
 #include "../headers/Gun.h"
 #include "../headers/Constants.h"
 
-Gun::Gun(Game *game) : Object(game) {
-    std::unique_ptr<Sprite> sprite = std::make_unique<Sprite>("./sprites/Gun.png", 1, 5);
+const float SPRITE_SCALE = 5;
+const sf::Vector2f BULLET_VELOCITY = {0, -600};
+
+Gun::Gun(Time *time, Window *window) : Object(time, window) {
+    auto sprite = LoadSprite("./sprites/Gun.png");
     sprite->SetOrigin(0.5f, 1.0f);
     sprite->SetPosition(WINDOW_WIDTH / 2, WINDOW_HEIGHT);
-    SetSprite(&sprite);
+    sprite->SetScale(SPRITE_SCALE, SPRITE_SCALE);
 }
 
-void Gun::Update(Window *window, float timeDelta) {
+void Gun::Update() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-        SetPosition(-_speed * timeDelta, 0, true);
+        SetPosition(-_speed * GetTime()->GetTimeDelta(), 0, true);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-        SetPosition(_speed * timeDelta, 0, true);
+        SetPosition(_speed * GetTime()->GetTimeDelta(), 0, true);
     }
-    Object::Update(window, timeDelta);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+        if (!_spacePressed) {
+            _bullets.push_back(std::make_unique<Bullet>(GetTime(), GetWindow(), BULLET_VELOCITY, GetPosition() - (sf::Vector2f){0, GetSize().y}));
+            _spacePressed = true;
+        }
+    }
+    else {
+        _spacePressed = false;
+    }
+
+    for (int i = _bullets.size() - 1; i >= 0; i--) {
+        auto bullet = _bullets[i].get();
+        if (bullet->IsOffScreen()) {
+            _bullets.erase(_bullets.begin() + i);
+            continue;
+        }
+
+        _bullets[i]->Update();
+    }
+
+    Object::Update();
 }

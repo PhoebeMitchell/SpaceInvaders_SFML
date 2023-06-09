@@ -6,19 +6,25 @@
 #define SPACEINVADERS_OBJECT_H
 
 #include <SFML/Graphics.hpp>
-#include "../headers/Sprite.h"
-#include "../headers/Game.h"
+#include "Sprite.h"
+#include "Game.h"
+#include "Updatable.h"
+#include "Time.h"
 
 class Window;
 
-class Object {
+class Object : public Updatable {
 public:
-    Object(Game *game);
-
-    virtual void Update(Window *window, float timeDelta);
+    Object(Time *time, Window *window);
+    void Update() override;
     void SetPosition(float x, float y, bool relative);
-    void SetSprite(std::unique_ptr<Sprite> *sprite);
+    sf::Vector2f GetSize();
+    sf::Vector2f GetPosition();
+    Sprite *LoadSprite(std::string spritePath);
+    Sprite *GetSprite();
+    Window *GetWindow();
 private:
+    Window *_window;
     std::unique_ptr<Sprite> _sprite;
 };
 

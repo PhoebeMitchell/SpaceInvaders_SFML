@@ -6,6 +6,7 @@
 #define SPACEINVADERS_GAME_H
 
 #include <vector>
+#include "Time.h"
 
 class Window;
 class Object;
@@ -16,11 +17,12 @@ public:
     Game(Window *window);
 
     void Run();
-    void AddObject(Object *object);
+    void AddUpdatable(Updatable *updatable);
+    Time *GetTime();
 private:
     Window *_window;
-    std::vector<Object*> _objects;
     std::vector<Updatable*> _updatables;
+    Time _time;
 };
 
 #endif //SPACEINVADERS_GAME_H

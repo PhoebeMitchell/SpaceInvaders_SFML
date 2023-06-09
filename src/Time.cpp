@@ -5,8 +5,15 @@
 #include "../headers/Time.h"
 
 float Time::GetTimeDelta() {
-    float time = _clock.getElapsedTime().asSeconds();
-    float deltaTime = time - _previousTime;
-    _previousTime = time;
-    return deltaTime;
+    return _timeDelta;
+}
+
+float Time::Update() {
+    auto newTime =_clock.getElapsedTime().asSeconds();
+    _timeDelta = newTime - _currentTime;
+    _currentTime = newTime;
+}
+
+float Time::GetCurrentTime() {
+    return _currentTime;
 }

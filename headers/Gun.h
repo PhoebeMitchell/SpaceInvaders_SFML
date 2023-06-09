@@ -6,14 +6,18 @@
 #define SPACEINVADERS_GUN_H
 
 #include "Object.h"
+#include "Bullet.h"
+#include <memory>
 
-class Gun : private Object {
+class Gun : public Object {
 public:
-    Gun(Game *game);
+    Gun(Time *time, Window *window);
 
-    void Update(Window *window, float timeDelta) override;
+    void Update() override;
 private:
     float _speed = 500;
+    bool _spacePressed;
+    std::vector<std::unique_ptr<Bullet>> _bullets;
 };
 
 

@@ -6,25 +6,42 @@
 #include "../headers/Object.h"
 #include "../headers/Window.h"
 
-Object::Object(Game *game) {
-    game->AddObject(this);
+Object::Object(Time *time, Window *window) : Updatable(time) {
+    _window = window;
 }
 
-void Object::Update(Window *window, float timeDelta) {
-    window->Draw(_sprite->GetDrawable());
+void Object::Update() {
+    _window->Draw(_sprite->GetDrawable());
 }
 
 void Object::SetPosition(float x, float y, bool relative) {
-    std::cout << x << " " << y << std::endl;
     if (relative) {
         auto position = _sprite->GetPosition();
         x += position.x;
         y += position.y;
     }
-    std::cout << x << " " << y << std::endl << std::endl;
     _sprite->SetPosition(x, y);
 }
 
-void Object::SetSprite(std::unique_ptr<Sprite> *sprite) {
-    _sprite = std::move(*sprite);
+Sprite *Object::LoadSprite(std::string spritePath) {
+    _sprite = std::make_unique<Sprite>(spritePath, 1, 1);
+    return _sprite.get();
+}
+
+sf::Vector2f Object::GetPosition() {
+    return _sprite->GetPosition();
+}
+
+sf::Vector2f Object::GetSize() {
+    auto textureSize = _sprite->GetTextureSize();
+    auto scale = _sprite->GetScale();
+    return {textureSize.x * scale.x, textureSize.y * scale.y};
+}
+
+Sprite *Object::GetSprite() {
+    return _sprite.get();
+}
+
+Window *Object::GetWindow() {
+    return _window;
 }
