@@ -16,10 +16,14 @@ public:
 
     void Update() override;
     bool IsAlive();
+    void IncrementSprite();
+    void MoveAfterDelay(float x, float y, float delay);
 private:
-    void Move(Time *time);
-
-    float _lastMovementTime = 0;
+    bool _shouldMoveAfterDelay = false;
+    float _moveAfterDelayCallTime = 0;
+    float _xDirection = 0;
+    float _yDirection = 0;
+    float _moveDelay = 0;
     bool _isAlive = 1;
 };
 

@@ -13,18 +13,28 @@ Invader::Invader(Time *time, Window *window, std::string spritePath) : Object(ti
 }
 
 void Invader::Update() {
-    if (GetTime()->GetCurrentTime() - _lastMovementTime > 1) {
-        Move(GetTime());
+    if (_shouldMoveAfterDelay && GetTime()->GetCurrentTime() - _moveAfterDelayCallTime > _moveDelay) {
+        SetPosition(_xDirection, _yDirection, true);
+        IncrementSprite();
+        _shouldMoveAfterDelay = false;
     }
-    Object::Update();
-}
 
-void Invader::Move(Time *time) {
-    _lastMovementTime = time->GetCurrentTime();
-    auto sprite = GetSprite();
-    sprite->SetFrame((sprite->GetCurrentFrame() + 1) % sprite->GetColumnCount());
+    Object::Update();
 }
 
 bool Invader::IsAlive() {
     return _isAlive;
+}
+
+void Invader::IncrementSprite() {
+    auto sprite = GetSprite();
+    sprite->SetFrame((sprite->GetCurrentFrame() + 1) % sprite->GetColumnCount());
+}
+
+void Invader::MoveAfterDelay(float x, float y, float delay) {
+    _shouldMoveAfterDelay = true;
+    _moveAfterDelayCallTime = GetTime()->GetCurrentTime();
+    _xDirection = x;
+    _yDirection = y;
+    _moveDelay = delay;
 }
