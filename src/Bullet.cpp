@@ -2,11 +2,15 @@
 // Created by Phoebe Mitchell on 07/06/2023.
 //
 
+#include <iostream>
 #include "../headers/Bullet.h"
+#include "../headers/Collision.h"
+#include "../headers/Invader.h"
 
 const float BULLET_SCALE = 2.5f;
 
-Bullet::Bullet(Time *time, Window *window, sf::Vector2f velocity, sf::Vector2f position) : Object(time, window) {
+Bullet::Bullet(Time *time, Window *window, sf::Vector2f velocity, sf::Vector2f position, Collision *collision) : Object(time, window) {
+    _collision = collision;
     auto sprite = LoadSprite("./sprites/Bullet.png");
     _velocity = velocity;
     sprite->SetPosition(position.x, position.y);
@@ -15,6 +19,15 @@ Bullet::Bullet(Time *time, Window *window, sf::Vector2f velocity, sf::Vector2f p
 }
 
 void Bullet::Update() {
+    auto collision = _collision->GetCollidingObject(this);
+    if (collision != nullptr) {
+        auto invader = dynamic_cast<Invader*>(collision);
+        if (invader != nullptr) {
+            invader->Die();
+            SetPosition(0, -10, false);
+        }
+    }
+
     SetPosition(_velocity.x * GetTime()->GetTimeDelta(), _velocity.y * GetTime()->GetTimeDelta(), true);
     Object::Update();
 }

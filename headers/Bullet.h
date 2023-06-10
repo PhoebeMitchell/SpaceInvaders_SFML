@@ -8,13 +8,16 @@
 
 #include "Object.h"
 
+class Collision;
+
 class Bullet : public Object {
 public:
-    Bullet(Time *time, Window *window, sf::Vector2f velocity, sf::Vector2f position);
+    Bullet(Time *time, Window *window, sf::Vector2f velocity, sf::Vector2f position, Collision *collision);
 
     void Update() override;
     bool IsOffScreen();
 private:
+    Collision *_collision;
     sf::Vector2f _velocity;
 };
 

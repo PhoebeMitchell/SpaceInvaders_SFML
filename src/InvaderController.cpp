@@ -4,33 +4,39 @@
 
 #include <iostream>
 #include "../headers/InvaderController.h"
+#include "../headers/Collision.h"
 
-InvaderController::InvaderController(Time *time, Window *window) : Updatable(time) {
+InvaderController::InvaderController(Time *time, Window *window, Collision *collision) : Updatable(time) {
+    _collision = collision;
     for (int i = 0; i < ROW_COUNT; i++) {
         for (int j = 0; j < COLUMN_COUNT; j++) {
-            _invaders[i][j] = std::make_unique<Invader>(GetTime(), window, INVADER_SPRITE_PATH);
+            _invaders[i][j] = std::make_unique<Invader>(GetTime(), window, INVADER_SPRITE_PATH, this);
             _invaders[i][j]->SetPosition(START_POSITION_X + SPACING_X * j, START_POSITION_Y + SPACING_Y * i, false);
+            _collision->AddObject(_invaders[i][j].get());
+            _activeInvaderCount++;
         }
     }
+    _maxInvaderCount = _activeInvaderCount;
 }
 
 void InvaderController::Update() {
     auto currentTime = GetTime()->GetCurrentTime();
 
-    if (currentTime - _lastRowUpdateTime  > ROW_UPDATE_INTERVAL) {
+    float multiplier = ((float)_activeInvaderCount / _maxInvaderCount);
+    if (currentTime - _lastRowUpdateTime  > ROW_UPDATE_INTERVAL * multiplier) {
         _lastRowUpdateTime = currentTime;
         if (GetFarthestRightInvaderPosition() + _invaders[0][0]->GetSize().x > MAX_RIGHT_POSITION && _currentDirection > 0 ||
             GetFarthestLeftInvaderPosition() < MAX_LEFT_POSITION && _currentDirection < 0) {
             for (int i = 0; i < ROW_COUNT; i++) {
                 for (int j = 0; j < COLUMN_COUNT; j++) {
-                    _invaders[ROW_COUNT - i - 1][j]->MoveAfterDelay(0, INVADER_SPEED, INVADER_UPDATE_DELAY * (i * ROW_COUNT + j));
+                    _invaders[ROW_COUNT - i - 1][j]->MoveAfterDelay(0, INVADER_SPEED, INVADER_UPDATE_DELAY * (i * ROW_COUNT + j) * multiplier);
                 }
             }
             _currentDirection *= -1;
         } else {
             for (int i = 0; i < ROW_COUNT; i++) {
                 for (int j = 0; j < COLUMN_COUNT; j++) {
-                    _invaders[ROW_COUNT - i - 1][j]->MoveAfterDelay(INVADER_SPEED * _currentDirection, 0, ROW_UPDATE_DELAY * i);
+                    _invaders[ROW_COUNT - i - 1][j]->MoveAfterDelay(INVADER_SPEED * _currentDirection, 0, ROW_UPDATE_DELAY * i * multiplier);
                 }
             }
         }
@@ -77,4 +83,8 @@ int InvaderController::GetFarthestLeftInvaderPosition() {
         }
     }
     return farthestPosition;
+}
+
+void InvaderController::DecrementInvaderCount() {
+    _activeInvaderCount--;
 }

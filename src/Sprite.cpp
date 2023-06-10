@@ -60,3 +60,7 @@ int Sprite::GetCurrentFrame() {
 int Sprite::GetColumnCount() {
     return _columnCount;
 }
+
+sf::FloatRect Sprite::GetBounds() {
+    return _sprite.getGlobalBounds();
+}

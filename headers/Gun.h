@@ -9,12 +9,15 @@
 #include "Bullet.h"
 #include <memory>
 
+class Collision;
+
 class Gun : public Object {
 public:
-    Gun(Time *time, Window *window);
+    Gun(Time *time, Window *window, Collision *collision);
 
     void Update() override;
 private:
+    Collision *_collision;
     float _speed = 500;
     bool _spacePressed;
     std::vector<std::unique_ptr<Bullet>> _bullets;

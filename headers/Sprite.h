@@ -22,6 +22,7 @@ public:
     sf::Vector2f GetPosition();
     sf::Vector2u GetTextureSize();
     sf::Vector2f GetScale();
+    sf::FloatRect GetBounds();
     int GetCurrentFrame();
     int GetColumnCount();
 private:

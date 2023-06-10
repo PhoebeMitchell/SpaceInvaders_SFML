@@ -45,3 +45,11 @@ Sprite *Object::GetSprite() {
 Window *Object::GetWindow() {
     return _window;
 }
+
+bool Object::IsCollisionActive() {
+    return _isCollisionActive;
+}
+
+void Object::SetCollisionActive(bool isCollisionActive) {
+    _isCollisionActive = isCollisionActive;
+}

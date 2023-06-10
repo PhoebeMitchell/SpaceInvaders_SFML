@@ -9,11 +9,14 @@
 #include "Invader.h"
 #include "Constants.h"
 
+class Collision;
+
 class InvaderController : public Updatable {
 public:
-    InvaderController(Time *time, Window *window);
+    InvaderController(Time *time, Window *window, Collision *collision);
 
     void Update() override;
+    void DecrementInvaderCount();
 private:
     static const int SPACING_X = 11 * Invader::INVADER_SCALE + 10;
     const int SPACING_Y = 20;
@@ -29,9 +32,12 @@ private:
     const float MAX_RIGHT_POSITION = WINDOW_WIDTH - 50;
     const float MAX_LEFT_POSITION = 50;
 
+    Collision *_collision;
     int _currentDirection = 1;
     float _lastRowUpdateTime = 0;
     std::unique_ptr<Invader> _invaders[ROW_COUNT][COLUMN_COUNT];
+    int _activeInvaderCount = 0;
+    int _maxInvaderCount = 0;
 
     int GetFarthestRightInvaderPosition();
     int GetFarthestLeftInvaderPosition();

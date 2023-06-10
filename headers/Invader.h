@@ -8,9 +8,11 @@
 #include <SFML/System/Vector2.hpp>
 #include "Object.h"
 
+class InvaderController;
+
 class Invader : public Object {
 public:
-    Invader(Time *time, Window *window, std::string spritePath);
+    Invader(Time *time, Window *window, std::string spritePath, InvaderController *invaderController);
 
     static const int INVADER_SCALE = 2;
 
@@ -18,7 +20,9 @@ public:
     bool IsAlive();
     void IncrementSprite();
     void MoveAfterDelay(float x, float y, float delay);
+    void Die();
 private:
+    InvaderController *_invaderController;
     bool _shouldMoveAfterDelay = false;
     float _moveAfterDelayCallTime = 0;
     float _xDirection = 0;

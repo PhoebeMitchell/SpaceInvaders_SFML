@@ -3,10 +3,12 @@
 //
 
 #include "../headers/Invader.h"
+#include "../headers/InvaderController.h"
 
 const int INVADER_SPRITE_COLUMNS = 2;
 
-Invader::Invader(Time *time, Window *window, std::string spritePath) : Object(time, window) {
+Invader::Invader(Time *time, Window *window, std::string spritePath, InvaderController *invaderController) : Object(time, window) {
+    _invaderController = invaderController;
     auto sprite = LoadSprite(spritePath);
     sprite->SetScale(INVADER_SCALE, INVADER_SCALE);
     sprite->SetColumnCount(INVADER_SPRITE_COLUMNS);
@@ -37,4 +39,10 @@ void Invader::MoveAfterDelay(float x, float y, float delay) {
     _xDirection = x;
     _yDirection = y;
     _moveDelay = delay;
+}
+
+void Invader::Die() {
+    _invaderController->DecrementInvaderCount();
+    _isAlive = false;
+    SetCollisionActive(false);
 }

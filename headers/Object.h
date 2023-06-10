@@ -23,8 +23,11 @@ public:
     Sprite *LoadSprite(std::string spritePath);
     Sprite *GetSprite();
     Window *GetWindow();
+    bool IsCollisionActive();
+    void SetCollisionActive(bool isCollisionActive);
 private:
     Window *_window;
+    bool _isCollisionActive = true;
     std::unique_ptr<Sprite> _sprite;
 };
 

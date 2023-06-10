@@ -4,11 +4,13 @@
 
 #include "../headers/Gun.h"
 #include "../headers/Constants.h"
+#include "../headers/Collision.h"
 
 const float SPRITE_SCALE = 5;
 const sf::Vector2f BULLET_VELOCITY = {0, -600};
 
-Gun::Gun(Time *time, Window *window) : Object(time, window) {
+Gun::Gun(Time *time, Window *window, Collision *collision) : Object(time, window) {
+    _collision = collision;
     auto sprite = LoadSprite("./sprites/Gun.png");
     sprite->SetOrigin(0.5f, 1.0f);
     sprite->SetPosition(WINDOW_WIDTH / 2, WINDOW_HEIGHT);
@@ -24,7 +26,7 @@ void Gun::Update() {
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
         if (!_spacePressed) {
-            _bullets.push_back(std::make_unique<Bullet>(GetTime(), GetWindow(), BULLET_VELOCITY, GetPosition() - (sf::Vector2f){0, GetSize().y}));
+            _bullets.push_back(std::make_unique<Bullet>(GetTime(), GetWindow(), BULLET_VELOCITY, GetPosition() - (sf::Vector2f){0, GetSize().y}, _collision));
             _spacePressed = true;
         }
     }

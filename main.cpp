@@ -3,15 +3,18 @@
 #include "headers/Constants.h"
 #include "headers/Gun.h"
 #include "headers/InvaderController.h"
+#include "headers/Collision.h"
 
 int main() {
     Window window(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_NAME);
     Game game(&window);
 
-    Gun gun(game.GetTime(), &window);
+    Collision collision;
+
+    Gun gun(game.GetTime(), &window, &collision);
     game.AddUpdatable(&gun);
 
-    InvaderController invaderController(game.GetTime(), &window);
+    InvaderController invaderController(game.GetTime(), &window, &collision);
     game.AddUpdatable(&invaderController);
 
     game.Run();
