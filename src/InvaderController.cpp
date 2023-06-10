@@ -2,7 +2,6 @@
 // Created by Phoebe Mitchell on 07/06/2023.
 //
 
-#include <iostream>
 #include "../headers/InvaderController.h"
 #include "../headers/Collision.h"
 
