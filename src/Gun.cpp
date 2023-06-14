@@ -27,7 +27,7 @@ void Gun::Update() {
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
         if (!_spacePressed) {
-            _bullets.push_back(std::make_unique<Bullet>(GetTime(), GetWindow(), BULLET_VELOCITY, GetPosition() - (sf::Vector2f){0, GetSize().y}, _playerCollision, _invaderCollision));
+            _bullets.push_back(std::make_unique<Bullet>(GetTime(), GetWindow(), BULLET_VELOCITY, GetPosition() - (sf::Vector2f){0, GetSize().y}, _invaderCollision, _playerCollision));
             _spacePressed = true;
         }
     }
