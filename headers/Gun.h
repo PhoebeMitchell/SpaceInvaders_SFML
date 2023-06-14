@@ -7,15 +7,17 @@
 
 #include "Object.h"
 #include "Bullet.h"
+#include "Destroyable.h"
 #include <memory>
 
 class Collision;
 
-class Gun : public Object {
+class Gun : public Object, public Destroyable {
 public:
     Gun(Time *time, Window *window, Collision *playerCollision, Collision *invaderCollision);
 
     void Update() override;
+    void Destroy() override;
 private:
     Collision *_playerCollision;
     Collision *_invaderCollision;

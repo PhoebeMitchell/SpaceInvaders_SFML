@@ -8,12 +8,14 @@
 #include <SFML/System/Vector2.hpp>
 #include "Object.h"
 #include "Bullet.h"
+#include "Destroyable.h"
 
 class InvaderController;
 
-class Invader : public Object {
+class Invader : public Object, public Destroyable {
 public:
-    Invader(Time *time, Window *window, std::string spritePath, InvaderController *invaderController, Collision *playerCollision, Collision *invaderCollision);
+    Invader(Time *time, Window *window, std::string spritePath, InvaderController *invaderController,
+            Collision *playerCollision, Collision *invaderCollision, int rowNumber, int columnNumber);
 
     static const int INVADER_SCALE = 2;
 
@@ -21,8 +23,8 @@ public:
     bool IsAlive();
     void IncrementSprite();
     void MoveAfterDelay(float x, float y, float delay);
-    void Die();
     void SetCanShoot(bool canShoot);
+    void Destroy() override;
 private:
     const float MIN_SHOOT_DELAY = 0.5f;
     const float MAX_SHOOT_DELAY = 10;
@@ -40,6 +42,8 @@ private:
     bool _canShoot = false;
     float _nextShootTime = 0;
     std::vector<std::unique_ptr<Bullet>> _bullets;
+    int _columnNumber;
+    int _rowNumber;
 
     void CalculateNextShootTime(Time *time);
     void Shoot();

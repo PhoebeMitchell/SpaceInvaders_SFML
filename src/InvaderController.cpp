@@ -8,7 +8,7 @@
 InvaderController::InvaderController(Time *time, Window *window, Collision *playerCollision, Collision *invaderCollision) : Updatable(time) {
     for (int i = 0; i < ROW_COUNT; i++) {
         for (int j = 0; j < COLUMN_COUNT; j++) {
-            _invaders[i][j] = std::make_unique<Invader>(GetTime(), window, INVADER_SPRITE_PATH, this, playerCollision, invaderCollision);
+            _invaders[i][j] = std::make_unique<Invader>(GetTime(), window, INVADER_SPRITE_PATH, this, playerCollision, invaderCollision, i, j);
             _invaders[i][j]->SetPosition(START_POSITION_X + SPACING_X * j, START_POSITION_Y + SPACING_Y * i, false);
             invaderCollision->AddObject(_invaders[i][j].get());
             _activeInvaderCount++;
@@ -86,6 +86,10 @@ int InvaderController::GetFarthestLeftInvaderPosition() {
     return farthestPosition;
 }
 
-void InvaderController::DecrementInvaderCount() {
+void InvaderController::KillInvader(int rowNumber, int columnNumber) {
     _activeInvaderCount--;
+    if (rowNumber - 1 < 0) {
+        return;
+    }
+    _invaders[rowNumber - 1][columnNumber]->SetCanShoot(true);
 }

@@ -21,15 +21,19 @@ Bullet::Bullet(Time *time, Window *window, sf::Vector2f velocity, sf::Vector2f p
 void Bullet::Update() {
     auto collision = _collision->GetCollidingObject(this);
     if (collision != nullptr) {
-        auto invader = dynamic_cast<Invader*>(collision);
-        if (invader != nullptr) {
-            invader->Die();
-            SetPosition(0, -10, false);
+        auto destroyable = dynamic_cast<Destroyable*>(collision);
+        if (destroyable != nullptr) {
+            destroyable->Destroy();
+            SetPosition(-10, -100, false);
         }
     }
 
     SetPosition(_velocity.x * GetTime()->GetTimeDelta(), _velocity.y * GetTime()->GetTimeDelta(), true);
     Object::Update();
+}
+
+void Bullet::Destroy() {
+
 }
 
 bool Bullet::IsOffScreen() {

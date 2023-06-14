@@ -47,3 +47,7 @@ void Gun::Update() {
 
     Object::Update();
 }
+
+void Gun::Destroy() {
+    SetPosition(-100, -100, false);
+}

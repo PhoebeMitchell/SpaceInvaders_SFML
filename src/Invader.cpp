@@ -4,14 +4,17 @@
 
 #include "../headers/Invader.h"
 #include "../headers/InvaderController.h"
+#include "../headers/Collision.h"
 #include <iostream>
 
 const int INVADER_SPRITE_COLUMNS = 2;
 
-Invader::Invader(Time *time, Window *window, std::string spritePath, InvaderController *invaderController, Collision *playerCollision, Collision *invaderCollision) : Object(time, window) {
+Invader::Invader(Time *time, Window *window, std::string spritePath, InvaderController *invaderController, Collision *playerCollision, Collision *invaderCollision, int rowNumber, int columnNumber) : Object(time, window) {
     _invaderController = invaderController;
     _playerCollision = playerCollision;
     _invaderCollision = _invaderCollision;
+    _rowNumber = rowNumber;
+    _columnNumber = columnNumber;
     auto sprite = LoadSprite(spritePath);
     sprite->SetScale(INVADER_SCALE, INVADER_SCALE);
     sprite->SetColumnCount(INVADER_SPRITE_COLUMNS);
@@ -52,12 +55,6 @@ void Invader::MoveAfterDelay(float x, float y, float delay) {
     _moveDelay = delay;
 }
 
-void Invader::Die() {
-    _invaderController->DecrementInvaderCount();
-    _isAlive = false;
-    SetCollisionActive(false);
-}
-
 void Invader::SetCanShoot(bool canShoot) {
     _canShoot = canShoot;
     CalculateNextShootTime(GetTime());
@@ -71,4 +68,10 @@ void Invader::Shoot() {
 
 void Invader::CalculateNextShootTime(Time *time) {
     _nextShootTime = time->GetCurrentTime() + MIN_SHOOT_DELAY + ((MAX_SHOOT_DELAY - MIN_SHOOT_DELAY) * ((float)rand() / RAND_MAX));
+}
+
+void Invader::Destroy() {
+    _invaderController->KillInvader(_rowNumber, _columnNumber);
+    _isAlive = false;
+    SetCollisionActive(false);
 }

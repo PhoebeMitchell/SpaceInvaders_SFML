@@ -16,7 +16,7 @@ public:
     InvaderController(Time *time, Window *window, Collision *playerCollision, Collision *invaderCollision);
 
     void Update() override;
-    void DecrementInvaderCount();
+    void KillInvader(int rowNumber, int columnNumber);
 private:
     static const int PADDING = 15;
     static const int SPACING_X = 11 * Invader::INVADER_SCALE + PADDING;

@@ -13,6 +13,7 @@ int main() {
     Collision invaderCollision;
 
     Gun gun(game.GetTime(), &window, &playerCollision, &invaderCollision);
+    playerCollision.AddObject(&gun);
     game.AddUpdatable(&gun);
 
     InvaderController invaderController(game.GetTime(), &window, &playerCollision, &invaderCollision);
