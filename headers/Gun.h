@@ -13,11 +13,12 @@ class Collision;
 
 class Gun : public Object {
 public:
-    Gun(Time *time, Window *window, Collision *collision);
+    Gun(Time *time, Window *window, Collision *playerCollision, Collision *invaderCollision);
 
     void Update() override;
 private:
-    Collision *_collision;
+    Collision *_playerCollision;
+    Collision *_invaderCollision;
     float _speed = 500;
     bool _spacePressed;
     std::vector<std::unique_ptr<Bullet>> _bullets;

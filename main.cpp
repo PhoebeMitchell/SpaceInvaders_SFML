@@ -9,12 +9,13 @@ int main() {
     Window window(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_NAME);
     Game game(&window);
 
-    Collision collision;
+    Collision playerCollision;
+    Collision invaderCollision;
 
-    Gun gun(game.GetTime(), &window, &collision);
+    Gun gun(game.GetTime(), &window, &playerCollision, &invaderCollision);
     game.AddUpdatable(&gun);
 
-    InvaderController invaderController(game.GetTime(), &window, &collision);
+    InvaderController invaderController(game.GetTime(), &window, &playerCollision, &invaderCollision);
     game.AddUpdatable(&invaderController);
 
     game.Run();

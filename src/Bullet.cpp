@@ -2,15 +2,15 @@
 // Created by Phoebe Mitchell on 07/06/2023.
 //
 
-#include <iostream>
 #include "../headers/Bullet.h"
 #include "../headers/Collision.h"
 #include "../headers/Invader.h"
+#include "../headers/Constants.h"
 
 const float BULLET_SCALE = 2.5f;
 
-Bullet::Bullet(Time *time, Window *window, sf::Vector2f velocity, sf::Vector2f position, Collision *collision) : Object(time, window) {
-    _collision = collision;
+Bullet::Bullet(Time *time, Window *window, sf::Vector2f velocity, sf::Vector2f position, Collision *playerCollision, Collision *invaderCollision) : Object(time, window) {
+    _collision = playerCollision;
     auto sprite = LoadSprite("./sprites/Bullet.png");
     _velocity = velocity;
     sprite->SetPosition(position.x, position.y);
@@ -33,5 +33,5 @@ void Bullet::Update() {
 }
 
 bool Bullet::IsOffScreen() {
-    return GetPosition().y < 0;
+    return GetPosition().y < 0 || GetPosition().y > WINDOW_HEIGHT;
 }

@@ -7,12 +7,13 @@
 
 #include <SFML/System/Vector2.hpp>
 #include "Object.h"
+#include "Bullet.h"
 
 class InvaderController;
 
 class Invader : public Object {
 public:
-    Invader(Time *time, Window *window, std::string spritePath, InvaderController *invaderController);
+    Invader(Time *time, Window *window, std::string spritePath, InvaderController *invaderController, Collision *playerCollision, Collision *invaderCollision);
 
     static const int INVADER_SCALE = 2;
 
@@ -21,14 +22,27 @@ public:
     void IncrementSprite();
     void MoveAfterDelay(float x, float y, float delay);
     void Die();
+    void SetCanShoot(bool canShoot);
 private:
+    const float MIN_SHOOT_DELAY = 0.5f;
+    const float MAX_SHOOT_DELAY = 10;
+    const sf::Vector2f BULLET_VELOCITY = {0, 400};
+
     InvaderController *_invaderController;
+    Collision *_playerCollision;
+    Collision *_invaderCollision;
     bool _shouldMoveAfterDelay = false;
     float _moveAfterDelayCallTime = 0;
     float _xDirection = 0;
     float _yDirection = 0;
     float _moveDelay = 0;
     bool _isAlive = 1;
+    bool _canShoot = false;
+    float _nextShootTime = 0;
+    std::vector<std::unique_ptr<Bullet>> _bullets;
+
+    void CalculateNextShootTime(Time *time);
+    void Shoot();
 };
 
 

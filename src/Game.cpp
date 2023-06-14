@@ -8,6 +8,7 @@
 
 Game::Game(Window *window) {
     _window = window;
+    srand(time(NULL));
 }
 
 void Game::Run() {

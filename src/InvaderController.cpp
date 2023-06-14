@@ -5,14 +5,16 @@
 #include "../headers/InvaderController.h"
 #include "../headers/Collision.h"
 
-InvaderController::InvaderController(Time *time, Window *window, Collision *collision) : Updatable(time) {
-    _collision = collision;
+InvaderController::InvaderController(Time *time, Window *window, Collision *playerCollision, Collision *invaderCollision) : Updatable(time) {
     for (int i = 0; i < ROW_COUNT; i++) {
         for (int j = 0; j < COLUMN_COUNT; j++) {
-            _invaders[i][j] = std::make_unique<Invader>(GetTime(), window, INVADER_SPRITE_PATH, this);
+            _invaders[i][j] = std::make_unique<Invader>(GetTime(), window, INVADER_SPRITE_PATH, this, playerCollision, invaderCollision);
             _invaders[i][j]->SetPosition(START_POSITION_X + SPACING_X * j, START_POSITION_Y + SPACING_Y * i, false);
-            _collision->AddObject(_invaders[i][j].get());
+            invaderCollision->AddObject(_invaders[i][j].get());
             _activeInvaderCount++;
+            if (i == ROW_COUNT - 1) {
+                _invaders[i][j]->SetCanShoot(true);
+            }
         }
     }
     _maxInvaderCount = _activeInvaderCount;

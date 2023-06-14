@@ -9,8 +9,9 @@
 const float SPRITE_SCALE = 5;
 const sf::Vector2f BULLET_VELOCITY = {0, -600};
 
-Gun::Gun(Time *time, Window *window, Collision *collision) : Object(time, window) {
-    _collision = collision;
+Gun::Gun(Time *time, Window *window, Collision *playerCollision, Collision *invaderCollision) : Object(time, window) {
+    _playerCollision = playerCollision;
+    _invaderCollision = invaderCollision;
     auto sprite = LoadSprite("./sprites/Gun.png");
     sprite->SetOrigin(0.5f, 1.0f);
     sprite->SetPosition(WINDOW_WIDTH / 2, WINDOW_HEIGHT);
@@ -26,7 +27,7 @@ void Gun::Update() {
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
         if (!_spacePressed) {
-            _bullets.push_back(std::make_unique<Bullet>(GetTime(), GetWindow(), BULLET_VELOCITY, GetPosition() - (sf::Vector2f){0, GetSize().y}, _collision));
+            _bullets.push_back(std::make_unique<Bullet>(GetTime(), GetWindow(), BULLET_VELOCITY, GetPosition() - (sf::Vector2f){0, GetSize().y}, _playerCollision, _invaderCollision));
             _spacePressed = true;
         }
     }

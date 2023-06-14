@@ -13,7 +13,7 @@ class Collision;
 
 class InvaderController : public Updatable {
 public:
-    InvaderController(Time *time, Window *window, Collision *collision);
+    InvaderController(Time *time, Window *window, Collision *playerCollision, Collision *invaderCollision);
 
     void Update() override;
     void DecrementInvaderCount();
@@ -33,7 +33,6 @@ private:
     const float MAX_RIGHT_POSITION = WINDOW_WIDTH - 11;
     const float MAX_LEFT_POSITION = 20;
 
-    Collision *_collision;
     int _currentDirection = 1;
     float _lastRowUpdateTime = 0;
     std::unique_ptr<Invader> _invaders[ROW_COUNT][COLUMN_COUNT];
